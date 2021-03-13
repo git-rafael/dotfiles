@@ -1,5 +1,13 @@
 #!/bin/zsh
-export PATH="${PATH}:${HOME}/.local/bin";
+
+export PATH="${HOME}/.local/bin:${PATH}";
+
+readonly SECRETS_FILE=${HOME}/.secrets;
+if [ -s "${SECRETS_FILE}" ]; then
+  source ${SECRETS_FILE};
+  export $(cut -d= -f1 ${SECRETS_FILE});
+fi
+
 source "/usr/share/zsh/share/zgen.zsh";
 if ! zgen saved; then
   zgen oh-my-zsh;
