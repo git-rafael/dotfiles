@@ -1,11 +1,11 @@
 #!/bin/zsh
 
 export PATH="${HOME}/.local/bin:${PATH}";
+function setsource { source $1 && export $(cat $1 | grep -v '\s*#' | cut -s -d= -f1); }
 
 readonly SECRETS_FILE=${HOME}/.secrets;
 if [ -s "${SECRETS_FILE}" ]; then
-  source ${SECRETS_FILE};
-  export $(cut -d= -f1 ${SECRETS_FILE});
+  setsource ${SECRETS_FILE};
 fi
 
 source "/usr/share/zsh/share/zgen.zsh";
